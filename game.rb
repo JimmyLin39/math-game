@@ -19,20 +19,24 @@ class Game
 
   def start
     until game_over? do
-      
-      puts "#{current_player.name}: Whart does 5 plus 3 equal?"
-      if gets.chomp != '8'
+      question = Question.new
+      puts "#{current_player.name}: Whart does #{question.first_num} plus #{question.second_num} equal?"
+      if gets.chomp != question.answer.to_s
         lose_life
         puts "#{current_player.name}: Seriously? No!"
+        if current_player.life == 0
+          # the other player win the game
+          swap_players
+          print_winner(current_player)
+          return print_game_over
+        end
       else
         puts "#{current_player.name}: YES! You are correct."
       end
       print_life
       print_new_turn
+      swap_players
     end
-    swap_players
-    print_winner(current_player)
-    print_game_over
   end
 
   def game_over?
