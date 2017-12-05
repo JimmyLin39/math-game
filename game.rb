@@ -46,5 +46,10 @@ class Game
     puts '----- NEW TURN -----'
   end
 
+  def print_game_over
+    puts '----- GAME OVER -----'
+    puts 'Good bye!'
+  end
+
 
 end
