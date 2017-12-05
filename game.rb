@@ -20,7 +20,7 @@ class Game
   def start
     until game_over? do
       question = Question.new
-      puts "#{current_player.name}: Whart does #{question.first_num} plus #{question.second_num} equal?"
+      puts "#{current_player.name}: What does #{question.first_num} plus #{question.second_num} equal?"
       if gets.chomp != question.answer.to_s
         lose_life
         puts "#{current_player.name}: Seriously? No!"
