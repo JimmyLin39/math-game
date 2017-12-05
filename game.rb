@@ -18,28 +18,43 @@ class Game
   end
 
   def start
-    puts "#{current_player.name}: Whart does 5 plus 3 equal?"
-    if gets.chomp != '8'
-      lose_life
-      puts "#{current_player.name}: Seriously? No!"
-      print_life
-      print_new_turn
-    else
-      puts "#{current_player.name}: YES! You are correct."
+    until game_over? do
+      
+      puts "#{current_player.name}: Whart does 5 plus 3 equal?"
+      if gets.chomp != '8'
+        lose_life
+        puts "#{current_player.name}: Seriously? No!"
+      else
+        puts "#{current_player.name}: YES! You are correct."
+      end
       print_life
       print_new_turn
     end
+    swap_players
+    print_winner(current_player)
+    print_game_over
+  end
 
+  def game_over?
+    @players.any? { |player| player.life < 1 }
   end
 
   def lose_life
     current_player.lose_life
   end
 
+  def swap_players
+    @current_player = (@current_player + 1) % @players.length
+  end
+
   def print_life
     player1 = @players[0]
     player2 = @players[1]
     puts "#{player1.name}: #{player1.life}/3 vs #{player2.name}: #{player2.life}/3"
+  end
+
+  def print_winner(winner)
+    puts "#{winner.name} wins with a score of #{winner.life}/3"
   end
 
   def print_new_turn
