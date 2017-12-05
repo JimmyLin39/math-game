@@ -3,7 +3,13 @@
 
 require './player'
 require './game'
+require './question'
 
 # Test code
 game = Game.new
 game.start
+
+# q = Question.new
+# puts q.first_num
+# puts q.second_num
+# puts q.answer
