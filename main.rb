@@ -6,7 +6,7 @@ require './game'
 require './question'
 
 # Test code
-game = Game.new
+game = MathGame::Game.new
 game.start
 
 # q = Question.new

@@ -1,3 +1,4 @@
+module MathGame
 class Game
 
   def self.main
@@ -17,34 +18,28 @@ class Game
     @players[@current_player]
   end
 
+  def game_over?
+    @players.any? { |player| player.life <= 0 }
+  end
+
   def start
     until game_over? do
       question = Question.new
       puts "#{current_player.name}: What does #{question.first_num} plus #{question.second_num} equal?"
       if gets.chomp != question.answer.to_s
-        lose_life
+        current_player.lose_life
         puts "#{current_player.name}: Seriously? No!"
-        if current_player.life == 0
-          # the other player win the game
-          swap_players
-          print_winner(current_player)
-          return print_game_over
-        end
       else
         puts "#{current_player.name}: YES! You are correct."
       end
       print_life
-      print_new_turn
-      swap_players
+      unless game_over?
+        print_new_turn
+        swap_players
+      end
     end
-  end
-
-  def game_over?
-    @players.any? { |player| player.life < 1 }
-  end
-
-  def lose_life
-    current_player.lose_life
+    print_winner
+    print_game_over
   end
 
   def swap_players
@@ -54,10 +49,11 @@ class Game
   def print_life
     player1 = @players[0]
     player2 = @players[1]
-    puts "#{player1.name}: #{player1.life}/3 vs #{player2.name}: #{player2.life}/3"
+    puts "#{player1.stats} vs #{player2.stats}"
   end
 
-  def print_winner(winner)
+  def print_winner
+    winner = (@players.select {|player| player.life > 0})[0]
     puts "#{winner.name} wins with a score of #{winner.life}/3"
   end
 
@@ -71,4 +67,5 @@ class Game
   end
 
 
+end
 end
